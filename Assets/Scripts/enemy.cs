@@ -7,12 +7,11 @@ public class enemy : MonoBehaviour
     public GameObject projectile;
     private float timerShoot;
     private float xRange = 8.4f;
-
     float timer = 0;
     float timeToMove = 0.5f;
     int numofMovements = 0;
     float speed = 3.2f;
-
+    private float yRange = 6.0f;
     void Start()
     {
 
@@ -39,22 +38,19 @@ public class enemy : MonoBehaviour
         if (numofMovements == 3)
         {
             transform.Translate(new Vector2(speed, 0));
+            Instantiate(projectile, transform.position, projectile.transform.rotation);
             numofMovements = -1;
             speed = -speed;
             timer = 0;
-            Instantiate(projectile, transform.position, projectile.transform.rotation);
-            timerShoot = 0;
         }
 
         timer += Time.deltaTime;
         if (timer > timeToMove && numofMovements < 3)
         {
             transform.Translate(new Vector2(speed, 0));
-
+            Instantiate(projectile, transform.position, projectile.transform.rotation);
             timer = 0;
             numofMovements++;
-            Instantiate(projectile, transform.position, projectile.transform.rotation);
-            timerShoot = 0;
         }
 
 
