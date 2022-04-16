@@ -46,4 +46,14 @@ public class PlayerController : MonoBehaviour
         if (transform.position.x > xRange) {
             transform.position = new Vector2(xRange, transform.position.y); }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy_Projectile")) {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Enemy")) { Destroy(gameObject); }
+    }
 }
