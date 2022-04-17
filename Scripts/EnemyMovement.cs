@@ -62,4 +62,13 @@ public class EnemyMovement : MonoBehaviour
             movementDirection = 1;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player_Projectile")) {
+            gameManager.RemoveEnemy(gameObject);
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
+    }
 }
