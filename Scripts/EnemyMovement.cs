@@ -67,6 +67,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player_Projectile")) {
             gameManager.RemoveEnemy(gameObject);
+            gameManager.ScoreNum = 1;
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
