@@ -1,2 +1,1 @@
-I was little free at work and I decided to add score function into project. I do have original project in my personal computer. 
-I don't want to messup my original branch called tula with the current work. For that reason, I am creating a new branch to work from the work when I get little free time. 
+My final branch 
