@@ -1,21 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private List<GameObject> enemies = new List<GameObject>();
 
-    private int Score;
+    private int score;
+    private bool resetGame;
+    private float timerReset;
 
     void Start()
     {
-        
+        resetGame = false;
+        timerReset = 0;
     }
 
     void Update()
     {
-        
+        if (resetGame) { timerReset += Time.deltaTime; }
+        if (timerReset >= 3.0f) { SceneManager.LoadScene("Menu"); }
     }
 
     // modified Observer pattern
@@ -27,9 +32,6 @@ public class GameManager : MonoBehaviour
     public void RemoveEnemy(GameObject enemy)
     {
         enemies.Remove(enemy);
-        // Score = Score + 1;
-        // Debug.Log(Score);
-
     }
 
     public void EnemiesChangeDirection()
@@ -39,8 +41,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GameOver()
+    {
+        resetGame = true;
+    }
+
     public int ScoreNum {
-        get { return Score;}
-        set {this.Score = this.Score + value;}
+        get { return score;}
+        set {this.score = this.score + value;}
     }
 }

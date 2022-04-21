@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private GameManager gameManager;
     public GameObject projectile;
 
     private float movementDirection;
@@ -12,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     void Update()
@@ -51,9 +52,13 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy_Projectile")) {
             Destroy(other.gameObject);
+            gameManager.GameOver();
             Destroy(gameObject);
         }
 
-        if (other.gameObject.CompareTag("Enemy")) { Destroy(gameObject); }
+        if (other.gameObject.CompareTag("Enemy")) {
+            gameManager.GameOver();
+            Destroy(gameObject);
+        }
     }
 }
