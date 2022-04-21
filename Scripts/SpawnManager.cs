@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject alien;
+
     private float enemyCounter;
 
     void Start()
@@ -15,12 +16,13 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     private void SpawnWave()
     {
-        for (int i = 0; i < 45; i++) {
+        for (int i = 0; i < 45; i++)
+        {
             Instantiate(alien, GenerateSpawnPosition(), alien.transform.rotation);
             enemyCounter++;
         }

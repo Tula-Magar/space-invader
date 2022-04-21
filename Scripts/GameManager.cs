@@ -10,12 +10,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
 
     // modified Observer pattern
@@ -27,20 +27,20 @@ public class GameManager : MonoBehaviour
     public void RemoveEnemy(GameObject enemy)
     {
         enemies.Remove(enemy);
-        // Score = Score + 1;
-        // Debug.Log(Score);
 
     }
 
     public void EnemiesChangeDirection()
     {
-        foreach(GameObject enemy in enemies) {
+        foreach (GameObject enemy in enemies)
+        {
             enemy.GetComponent<EnemyMovement>().ChangeDirection();
         }
     }
 
-    public int ScoreNum {
-        get { return Score;}
-        set {this.Score = this.Score + value;}
+    public int ScoreNum
+    {
+        get { return Score; }
+        set { this.Score = this.Score + value; }
     }
 }

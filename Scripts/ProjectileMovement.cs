@@ -10,7 +10,7 @@ public class ProjectileMovement : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()

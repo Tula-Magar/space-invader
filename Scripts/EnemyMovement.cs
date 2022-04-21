@@ -27,8 +27,9 @@ public class EnemyMovement : MonoBehaviour
         timerShoot += Time.deltaTime;
 
         CheckOutOfBounds();
-        
-        if (timerShoot > 3.0f) {
+
+        if (timerShoot > 3.0f)
+        {
             Instantiate(projectile, transform.position, projectile.transform.rotation);
             timerShoot = 0;
         }
@@ -36,10 +37,14 @@ public class EnemyMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (timerMove > 1.0f) {
-            if (movementDirection == 1) { // right
+        if (timerMove > 1.0f)
+        {
+            if (movementDirection == 1)
+            { // right
                 transform.position = new Vector2(transform.position.x + 1.0f, transform.position.y);
-            } else if (movementDirection == -1) { // left
+            }
+            else if (movementDirection == -1)
+            { // left
                 transform.position = new Vector2(transform.position.x - 1.0f, transform.position.y);
             }
             timerMove = 0;
@@ -53,11 +58,13 @@ public class EnemyMovement : MonoBehaviour
 
     public void ChangeDirection()
     {
-        if (movementDirection == 1) {
+        if (movementDirection == 1)
+        {
             transform.position = new Vector2(transform.position.x - 1, transform.position.y - 1);
             movementDirection = -1;
         }
-        else {
+        else
+        {
             transform.position = new Vector2(transform.position.x + 1, transform.position.y - 1);
             movementDirection = 1;
         }
@@ -65,7 +72,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player_Projectile")) {
+        if (other.gameObject.CompareTag("Player_Projectile"))
+        {
             gameManager.RemoveEnemy(gameObject);
             gameManager.ScoreNum = 1;
             Destroy(other.gameObject);
