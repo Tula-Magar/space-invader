@@ -35,4 +35,13 @@ public class ClickForInfo : MonoBehaviour
             displayingInfo = false;
         }
     }
+
+    public void OnMouseOver()
+    {
+       GetComponent<SpriteRenderer>().color = new Color (255, 0, 187, 255);
+    }
+    public void OnMouseExit()
+    {
+        GetComponent<SpriteRenderer>().color = new Color (248, 248, 248, 255);
+    }
 }
