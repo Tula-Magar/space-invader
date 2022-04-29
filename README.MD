@@ -43,35 +43,35 @@ of all users. All the players will get to see the global high score on the main 
 
 ## Enemy 
 
-	0 to 45 enemies respawn at a time and start to shoot randomly toward the player. When the player completes the game and goes to the next 
-  level. The player will feel that enemies shoot randomly speed goes up. Enemies shoot randomly speed will go up as soon as the player 
-  levels up. The enemy doesn't have a life span like the player, the enemy can respawn as soon as the player kills all the enemies. 
+0 to 45 enemies respawn at a time and start to shoot randomly toward the player. When the player completes the game and goes to the next 
+level. The player will feel that enemies shoot randomly speed goes up. Enemies shoot randomly speed will go up as soon as the player 
+levels up. The enemy doesn't have a life span like the player, the enemy can respawn as soon as the player kills all the enemies. 
 
 
 ## Enemy and ship movement 
 
-	Enemy and ship move automatically. When enemies move left and right and touch the border, enemies begin to a step toward the player. 
-  The player must destroy the enemies before enemies move toward and make it hard to win the game. 
+Enemy and ship move automatically. When enemies move left and right and touch the border, enemies begin to a step toward the player. 
+The player must destroy the enemies before enemies move toward and make it hard to win the game. 
 
 
 ## Player 
 
-	The player must use the space keyboard to shoot toward the enemies. Two arrows from the keyboard help to move the player left and right.
-  ← this arrow will move the player to the left side. → this arrow will move the player to the right side. When the player projectile is
-  known as a bullet touch the enemy. The enemy will die and gets a 1-point score. If a player kills a ship then the player will get a 3-point score. 
+The player must use the space keyboard to shoot toward the enemies. Two arrows from the keyboard help to move the player left and right.
+← this arrow will move the player to the left side. → this arrow will move the player to the right side. When the player projectile is
+known as a bullet touch the enemy. The enemy will die and gets a 1-point score. If a player kills a ship then the player will get a 3-point score. 
 
-	In each game, the player gets three life spans. The player will respawn each time player dies up to three-time and after the third attempt, 
-  the game will be over. 
+In each game, the player gets three life spans. The player will respawn each time player dies up to three-time and after the third attempt, 
+the game will be over. 
 
 ## High score vs score
 
-	I used Unity PlayerPrefs to store a high score on the player's personal computer. If the player moves to another personal computer then 
-  a high score won't display from one computer to another computer, unlike Global High Score from the main menu scene. A player's 
-  high score will only display on their personal computer. 
+I used Unity PlayerPrefs to store a high score on the player's personal computer. If the player moves to another personal computer then 
+a high score won't display from one computer to another computer, unlike Global High Score from the main menu scene. A player's 
+high score will only display on their personal computer. 
 
-	The point will keep adding to the score each time player kills the enemy or ship. If the score is higher than a High Score then 
-  that means the player broke their own score record and set their own new score record. 
+The point will keep adding to the score each time player kills the enemy or ship. If the score is higher than a High Score then 
+that means the player broke their own score record and set their own new score record. 
 
 ## Quit
 
-	This quit button is very simple. If the player clicks on the QUIT button then the game application will close. 
+This quit button is very simple. If the player clicks on the QUIT button then the game application will close. 
