@@ -5,45 +5,42 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private List<GameObject> enemies = new List<GameObject>();
+    public GameObject player;
 
     private int score;
+    private int playerLives;
+    private bool newLife;
     private bool resetGame;
     private float timerReset;
 
     void Start()
     {
+        Instantiate(player, new Vector2(0, -4), player.transform.rotation);
+
+        playerLives = 3;
         resetGame = false;
         timerReset = 0;
     }
 
     void Update()
     {
-        if (resetGame) { timerReset += Time.deltaTime; }
-        if (timerReset >= 3.0f) { SceneManager.LoadScene("Menu"); }
-    }
+        if (resetGame || newLife) { timerReset += Time.deltaTime; }
+        if (timerReset >= 3.0f) {
+            if (newLife) {
+                Instantiate(player, new Vector2(0, -4), player.transform.rotation);
+                newLife = false;
+            } else { SceneManager.LoadScene("Menu"); }
 
-    // modified Observer pattern
-    public void AddEnemy(GameObject enemy)
-    {
-        enemies.Add(enemy);
-    }
-
-    public void RemoveEnemy(GameObject enemy)
-    {
-        enemies.Remove(enemy);
-    }
-
-    public void EnemiesChangeDirection()
-    {
-        foreach(GameObject enemy in enemies) {
-            enemy.GetComponent<EnemyMovement>().ChangeDirection();
+            timerReset = 0;
         }
     }
 
-    public void GameOver()
+    public void PlayerDied()
     {
-        resetGame = true;
+        playerLives = playerLives - 1;
+        if (playerLives > 0) { newLife = true; }
+        else { resetGame = true; }
+        
     }
 
     public int ScoreNum {

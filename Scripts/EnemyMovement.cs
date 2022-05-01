@@ -5,17 +5,17 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     private GameManager gameManager;
-    public GameObject projectile;
+    private EnemyManager enemyManager;
 
     private float movementDirection;
     private float timerMove;
-    private float timerShoot;
     private float xRange;
 
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gameManager.AddEnemy(gameObject);   // modified Observer pattern
+        enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
+        enemyManager.AddEnemy(gameObject);   // modified Observer pattern
 
         movementDirection = -1;
         xRange = 9.0f;
@@ -24,31 +24,21 @@ public class EnemyMovement : MonoBehaviour
     void Update()
     {
         timerMove += Time.deltaTime;
-        timerShoot += Time.deltaTime;
 
         CheckOutOfBounds();
-        
-        if (timerShoot > 3.0f) {
-            Instantiate(projectile, transform.position, projectile.transform.rotation);
-            timerShoot = 0;
-        }
     }
 
     void FixedUpdate()
     {
         if (timerMove > 1.0f) {
-            if (movementDirection == 1) { // right
-                transform.position = new Vector2(transform.position.x + 1.0f, transform.position.y);
-            } else if (movementDirection == -1) { // left
-                transform.position = new Vector2(transform.position.x - 1.0f, transform.position.y);
-            }
+            transform.position = new Vector2(transform.position.x + movementDirection, transform.position.y);
             timerMove = 0;
         }
     }
 
     private void CheckOutOfBounds()
     {
-        if (Mathf.Abs(transform.position.x) >= xRange) { gameManager.EnemiesChangeDirection(); }
+        if (Mathf.Abs(transform.position.x) >= xRange) { enemyManager.EnemiesChangeDirection(); }
     }
 
     public void ChangeDirection()
@@ -66,7 +56,7 @@ public class EnemyMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player_Projectile")) {
-            gameManager.RemoveEnemy(gameObject);
+            enemyManager.RemoveEnemy(gameObject);
             gameManager.ScoreNum = 1;
             Destroy(other.gameObject);
             Destroy(gameObject);

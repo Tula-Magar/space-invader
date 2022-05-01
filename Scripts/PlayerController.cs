@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public GameObject projectile;
 
     private float movementDirection;
+    private float timerMove;
     private float timerShoot;
     private float xRange = 8.4f;
 
@@ -18,11 +19,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        timerMove += Time.deltaTime;
         timerShoot += Time.deltaTime;
 
         CheckOutOfBounds();
         
-        if (Input.GetButton("Jump") && (timerShoot > 0.2f)) { // keyword for spacebar
+        // 'Jump' is the keyword for spacebar
+        if (Input.GetButton("Jump") && (timerShoot > 0.2f) && !GameObject.Find("Player_Projectile(Clone)")) {
             Instantiate(projectile, transform.position, projectile.transform.rotation);
             timerShoot = 0;
         }
@@ -32,10 +35,14 @@ public class PlayerController : MonoBehaviour
     {
         movementDirection = Input.GetAxisRaw("Horizontal"); // fixes jitter movement bug
 
-        if (movementDirection == 1) { // right
-            transform.position = new Vector2(transform.position.x + 0.2f, transform.position.y);
-        } else if (movementDirection == -1) { // left
-            transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y);
+        if (timerMove >= 0.01f) {
+            if (movementDirection == 1) { // right
+                transform.position = new Vector2(transform.position.x + 0.2f, transform.position.y);
+            } else if (movementDirection == -1) { // left
+                transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y);
+            }
+
+            timerMove = 0;
         }
     }
 
@@ -52,12 +59,12 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy_Projectile")) {
             Destroy(other.gameObject);
-            gameManager.GameOver();
+            gameManager.PlayerDied();
             Destroy(gameObject);
         }
 
         if (other.gameObject.CompareTag("Enemy")) {
-            gameManager.GameOver();
+            gameManager.PlayerDied();
             Destroy(gameObject);
         }
     }
