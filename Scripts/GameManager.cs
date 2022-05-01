@@ -1,46 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private List<GameObject> enemies = new List<GameObject>();
+    public GameObject player;
 
-    private int Score;
+    private int score;
+    private int playerLives;
+    private bool newLife;
+    private bool resetGame;
+    private float timerReset;
 
     void Start()
     {
+        Instantiate(player, new Vector2(0, -4), player.transform.rotation);
 
+        playerLives = 3;
+        resetGame = false;
+        timerReset = 0;
     }
 
     void Update()
     {
+        if (resetGame || newLife) { timerReset += Time.deltaTime; }
+        if (timerReset >= 3.0f) {
+            if (newLife) {
+                Instantiate(player, new Vector2(0, -4), player.transform.rotation);
+                newLife = false;
+            } else { SceneManager.LoadScene("Menu"); }
 
-    }
-
-    // modified Observer pattern
-    public void AddEnemy(GameObject enemy)
-    {
-        enemies.Add(enemy);
-    }
-
-    public void RemoveEnemy(GameObject enemy)
-    {
-        enemies.Remove(enemy);
-
-    }
-
-    public void EnemiesChangeDirection()
-    {
-        foreach (GameObject enemy in enemies)
-        {
-            enemy.GetComponent<EnemyMovement>().ChangeDirection();
+            timerReset = 0;
         }
     }
 
-    public int ScoreNum
+    public void PlayerDied()
     {
-        get { return Score; }
-        set { this.Score = this.Score + value; }
+        playerLives = playerLives - 1;
+        if (playerLives > 0) { newLife = true; }
+        else { resetGame = true; }
+        
+    }
+
+    public int ScoreNum {
+        get { return score;}
+        set {this.score = this.score + value;}
     }
 }

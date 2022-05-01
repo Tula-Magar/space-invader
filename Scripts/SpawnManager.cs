@@ -5,8 +5,10 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject alien;
+    public GameObject alienShip;
 
     private float enemyCounter;
+    private float timerAlienShip;
 
     void Start()
     {
@@ -16,16 +18,28 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-
+        timerAlienShip += Time.deltaTime;
+        if (timerAlienShip > 10.0f) {
+            SpawnAlienShip();
+            timerAlienShip = 0;
+        }
     }
 
-    private void SpawnWave()
+    public void SpawnWave()
     {
-        for (int i = 0; i < 45; i++)
-        {
+        for (int i = 0; i < 45; i++) {
             Instantiate(alien, GenerateSpawnPosition(), alien.transform.rotation);
             enemyCounter++;
         }
+        enemyCounter = 0;
+    }
+
+    private void SpawnAlienShip()
+    {
+        int xPosition;
+        if (Random.Range(0, 2) == 1) { xPosition = 10; }
+        else { xPosition = -10; }
+        Instantiate(alienShip, new Vector2(xPosition, 5), alienShip.transform.rotation);
     }
 
     private Vector2 GenerateSpawnPosition()
