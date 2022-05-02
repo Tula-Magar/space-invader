@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     private GameManager gameManager;
     public GameObject projectile;
+    public GameObject Explosion;
 
     private float movementDirection;
     private float timerMove;
@@ -60,11 +61,13 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy_Projectile")) {
             Destroy(other.gameObject);
             gameManager.PlayerDied();
+            Destroy(Instantiate(Explosion, transform.position, transform.rotation), 0.2f);
             Destroy(gameObject);
         }
 
         if (other.gameObject.CompareTag("Enemy")) {
             gameManager.PlayerDied();
+            Destroy(Instantiate(Explosion, transform.position, transform.rotation), 0.2f);
             Destroy(gameObject);
         }
     }

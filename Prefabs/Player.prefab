@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 2996079595736660095, guid: 983b3e1496c25f2468b5f4a559cc637f, type: 3}
+  Explosion: {fileID: 637529300651026865, guid: 80f7e155242aef44fac9a51be82f9e35, type: 3}
 --- !u!61 &4275862010227048340
 BoxCollider2D:
   m_ObjectHideFlags: 0

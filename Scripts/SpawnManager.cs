@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         enemyCounter = 0;
-        SpawnWave();
+        if (SceneManager.GetActiveScene().name == "PlayGame") { SpawnWave(); }
+        // Debug for UnitTesting scene
     }
 
     void Update()

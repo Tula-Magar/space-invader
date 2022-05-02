@@ -11,6 +11,8 @@ public class EnemyManager : MonoBehaviour
     private float timerShoot;
     private float timerRespawn;
 
+    private float TimerIncrease = 3.0f;
+
     void Start()
     {
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
@@ -21,14 +23,15 @@ public class EnemyManager : MonoBehaviour
         timerShoot += Time.deltaTime;
         
         if (enemies.Count == 0) {
-            timerRespawn += Time.deltaTime;
-            if (timerRespawn > 3.0f) {
+            timerRespawn += Time.deltaTime;  
+            if (timerRespawn > TimerIncrease) {
                 spawnManager.SpawnWave();
+                TimerIncrease -= 0.5f; // We can slow down using different number, as for a level up test we gonna use 2.8f
                 timerRespawn = 0;
             }
         }
 
-        if (timerShoot > 3.0f && enemies.Count > 0) {
+        if (timerShoot > TimerIncrease && enemies.Count > 0) {
             int randomEnemy = Random.Range(0, enemies.Count);
             Instantiate(projectile, enemies[randomEnemy].transform.position, projectile.transform.rotation);
             timerShoot = 0;

@@ -75,3 +75,4 @@ that means the player broke their own score record and set their own new score r
 ## Quit
 
 This quit button is very simple. If the player clicks on the QUIT button then the game application will close. 
+

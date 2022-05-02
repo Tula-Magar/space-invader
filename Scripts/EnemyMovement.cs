@@ -6,7 +6,8 @@ public class EnemyMovement : MonoBehaviour
 {
     private GameManager gameManager;
     private EnemyManager enemyManager;
-
+    public GameObject Explosion;
+    
     private float movementDirection;
     private float timerMove;
     private float xRange;
@@ -57,6 +58,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player_Projectile")) {
             enemyManager.RemoveEnemy(gameObject);
+            Destroy(Instantiate(Explosion, transform.position, transform.rotation), 0.2f);
             gameManager.ScoreNum = 1;
             Destroy(other.gameObject);
             Destroy(gameObject);
