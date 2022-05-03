@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 public class GameManager : MonoBehaviour
 {
     public GameObject player;
-
     private int score;
     private int playerLives;
     private bool newLife;
     private bool resetGame;
     private float timerReset;
+    public GameManager(){
+
+    }
 
     void Start()
     {
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
         playerLives = 3;
         resetGame = false;
         timerReset = 0;
+        
+        
     }
 
     void Update()
@@ -36,11 +39,14 @@ public class GameManager : MonoBehaviour
     }
 
     public void PlayerDied()
-    {
+    {   
         playerLives = playerLives - 1;
-        if (playerLives > 0) { newLife = true; }
-        else { resetGame = true; }
-        
+        if (playerLives > 0) {newLife = true;}
+        else { resetGame = true; }    
+    }
+
+    public int Get_playerLives () {
+        return playerLives;
     }
 
     public int ScoreNum {
