@@ -1,20 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     private GameManager gameManager;
     public GameObject projectile;
+    public GameObject Explosion;
 
     private float movementDirection;
     private float timerMove;
     private float timerShoot;
     private float xRange = 8.4f;
-
+    private Text Player_Lives;
+    private bool CallOnlyOneTime;
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        CallOnlyOneTime = true;
+        Player_Lives = GameObject.Find("Canvas/PlayerLives").GetComponent<Text>();
+        Player_Lives.text = "PlayerLives: " + gameManager.Get_playerLives();
     }
 
     void Update()
@@ -57,15 +63,25 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+    
         if (other.gameObject.CompareTag("Enemy_Projectile")) {
             Destroy(other.gameObject);
             gameManager.PlayerDied();
+            Player_Lives.text = "PlayerLives: " + gameManager.Get_playerLives();
+            Destroy(Instantiate(Explosion, transform.position, transform.rotation), 0.2f);
             Destroy(gameObject);
         }
 
-        if (other.gameObject.CompareTag("Enemy")) {
-            gameManager.PlayerDied();
-            Destroy(gameObject);
+        if(CallOnlyOneTime){ // call only one time even multiple enemies collide with player 
+            if (other.gameObject.CompareTag("Enemy")) {
+                gameManager.PlayerDied();
+                Player_Lives.text = "PlayerLives: " + gameManager.Get_playerLives();
+                Destroy(Instantiate(Explosion, transform.position, transform.rotation), 0.2f);
+                Destroy(gameObject);
+                CallOnlyOneTime = false;  
+            }
         }
+        else { CallOnlyOneTime = true;}
+        
     }
 }
