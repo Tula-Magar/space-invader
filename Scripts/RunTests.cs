@@ -17,6 +17,7 @@ public class RunTests : MonoBehaviour
 
     void Start()
     {
+        // grabs major components to test
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();

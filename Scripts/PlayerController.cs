@@ -1,26 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 public class PlayerController : MonoBehaviour
 {
     private GameManager gameManager;
     public GameObject projectile;
-    public GameObject Explosion;
+    public GameObject explosion;
 
     private float movementDirection;
     private float timerMove;
     private float timerShoot;
     private float xRange = 8.4f;
-    private Text Player_Lives;
-    private bool CallOnlyOneTime;
+    private bool callOnce;
+
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        CallOnlyOneTime = true;
-        Player_Lives = GameObject.Find("Canvas/PlayerLives").GetComponent<Text>();
-        Player_Lives.text = "PlayerLives: " + gameManager.Get_playerLives();
+        callOnce = true;
     }
 
     void Update()
@@ -31,16 +29,19 @@ public class PlayerController : MonoBehaviour
         CheckOutOfBounds();
         
         // 'Jump' is the keyword for spacebar
+        // if exceeding cooldown and not already one projectile on screen, create a projectile for the player
         if (Input.GetButton("Jump") && (timerShoot > 0.2f) && !GameObject.Find("Player_Projectile(Clone)")) {
             Instantiate(projectile, transform.position, projectile.transform.rotation);
             timerShoot = 0;
         }
     }
 
+    // FixedUpdate() is used to prevent stuttering due to Unity and frame timing shenanigans
     void FixedUpdate()
     {
-        movementDirection = Input.GetAxisRaw("Horizontal"); // fixes jitter movement bug
+        movementDirection = Input.GetAxisRaw("Horizontal"); // range from -1 to 1 (left to right)
 
+        // timer tacks performance to timer, not computer power
         if (timerMove >= 0.01f) {
             if (movementDirection == 1) { // right
                 transform.position = new Vector2(transform.position.x + 0.2f, transform.position.y);
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // keeps player from leaving screen by locking them in to the xRange
     private void CheckOutOfBounds()
     {
         if (transform.position.x < -xRange) {
@@ -61,27 +63,24 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector2(xRange, transform.position.y); }
     }
 
+    // Unity's MonoBehaviour does the heavy lifting here
+    // only difference between two if statements is whether or not to destroy other.gameObject
     private void OnTriggerEnter2D(Collider2D other)
     {
-    
         if (other.gameObject.CompareTag("Enemy_Projectile")) {
             Destroy(other.gameObject);
             gameManager.PlayerDied();
-            Player_Lives.text = "PlayerLives: " + gameManager.Get_playerLives();
-            Destroy(Instantiate(Explosion, transform.position, transform.rotation), 0.2f);
+            Destroy(Instantiate(explosion, transform.position, transform.rotation), 0.2f);
             Destroy(gameObject);
         }
 
-        if(CallOnlyOneTime){ // call only one time even multiple enemies collide with player 
+        if (callOnce) { // call only one time even multiple enemies collide with player 
             if (other.gameObject.CompareTag("Enemy")) {
                 gameManager.PlayerDied();
-                Player_Lives.text = "PlayerLives: " + gameManager.Get_playerLives();
-                Destroy(Instantiate(Explosion, transform.position, transform.rotation), 0.2f);
+                Destroy(Instantiate(explosion, transform.position, transform.rotation), 0.2f);
                 Destroy(gameObject);
-                CallOnlyOneTime = false;  
+                callOnce = false;  
             }
-        }
-        else { CallOnlyOneTime = true;}
-        
+        } else { callOnce = true;}
     }
 }

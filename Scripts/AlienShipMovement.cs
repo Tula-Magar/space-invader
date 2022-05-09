@@ -21,6 +21,7 @@ public class AlienShipMovement : MonoBehaviour
 
     void Update()
     {
+        // move left or right until off-screen, then destroy self
         timerMove += Time.deltaTime;
         if (timerMove > 0.01f) {
             transform.position = new Vector2(transform.position.x + movementDirection, transform.position.y);

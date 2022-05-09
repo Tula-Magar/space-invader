@@ -6,7 +6,7 @@ using System.IO;
 
 public class GlobalHighScore : MonoBehaviour
 {
-    private string path = "Assets/Resources/GlobalHighScore.txt";
+    private string path = "GlobalHighScore.txt"; // Assets/Resources/GlobalHighScore.txt
     private Text globalHighScore;
 
     private Text Greeting;

@@ -12,6 +12,7 @@ public class Score : MonoBehaviour
     private Text Resets;
     private int Number;
     private string path = "Assets/Resources/GlobalHighScore.txt";
+
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -21,7 +22,7 @@ public class Score : MonoBehaviour
         GameObject.Find("Canvas/Reset_button").GetComponent<Image>().color = new Color(255, 0, 187, 255);
 
         Resets.text = "Reset";
-        HighScore.text = "Player highscore: " + PlayerPrefs.GetInt("highscore").ToString();
+        HighScore.text = "High Score: " + PlayerPrefs.GetInt("highscore").ToString();
         ScoreTxt.text = "Score: " + 0;
 
     }
@@ -38,7 +39,7 @@ public class Score : MonoBehaviour
         {
 
             PlayerPrefs.SetInt("highscore", gameManager.ScoreNum);
-            HighScore.text = "Player highscore: " + gameManager.ScoreNum.ToString();
+            HighScore.text = "High Score: " + gameManager.ScoreNum.ToString();
         }
 
         else if (PlayerPrefs.GetInt("highscore", 0) > Number)
@@ -53,7 +54,7 @@ public class Score : MonoBehaviour
     public void Reset()
     {
         PlayerPrefs.DeleteAll();
-        HighScore.text = "Player highscore: 0";
+        HighScore.text = "High Score: 0";
     }
 
 

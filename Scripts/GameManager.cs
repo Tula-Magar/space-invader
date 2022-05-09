@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 public class GameManager : MonoBehaviour
 {
     public GameObject player;
+    private Text displayLives;
     private int score;
     private int playerLives;
     private bool newLife;
     private bool resetGame;
     private float timerReset;
-    public GameManager(){
-
-    }
 
     void Start()
     {
@@ -21,12 +21,14 @@ public class GameManager : MonoBehaviour
         playerLives = 3;
         resetGame = false;
         timerReset = 0;
-        
-        
+
+        displayLives = GameObject.Find("Canvas/PlayerLives").GetComponent<Text>();
+        displayLives.text = "Lives: " + playerLives;
     }
 
     void Update()
     {
+        // determines whether to loop to menu or spawn a new player
         if (resetGame || newLife) { timerReset += Time.deltaTime; }
         if (timerReset >= 3.0f) {
             if (newLife) {
@@ -38,15 +40,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // accessed only by PlayerController
     public void PlayerDied()
     {   
         playerLives = playerLives - 1;
         if (playerLives > 0) {newLife = true;}
-        else { resetGame = true; }    
-    }
-
-    public int Get_playerLives () {
-        return playerLives;
+        else { resetGame = true; }
+        
+        displayLives.text = "Lives: " + playerLives;
     }
 
     public int ScoreNum {

@@ -19,7 +19,7 @@ public class ClickForQuit : MonoBehaviour
     void OnMouseDown()
     {
         Application.Quit();
-        UnityEditor.EditorApplication.isPlaying = false; // exit the game in the editor mode
+        // UnityEditor.EditorApplication.isPlaying = false; // Removed for build
     }
 
     public void OnMouseOver()

@@ -10,8 +10,7 @@ public class EnemyManager : MonoBehaviour
 
     private float timerShoot;
     private float timerRespawn;
-
-    private float TimerIncrease = 3.0f;
+    private float shootCooldown = 3.0f;
 
     void Start()
     {
@@ -22,19 +21,20 @@ public class EnemyManager : MonoBehaviour
     {
         timerShoot += Time.deltaTime;
         
+        // respawns wave of enemies if none in list
         if (enemies.Count == 0) {
-            timerRespawn += Time.deltaTime;  
-            if (timerRespawn > TimerIncrease) {
+            timerRespawn += Time.deltaTime;  // transition timer
+            if (timerRespawn > 3.0f) {
                 spawnManager.SpawnWave();
-                TimerIncrease -= 0.5f; // We can slow down using different number, as for a level up test we gonna use 2.8f
+                if (shootCooldown >= 1.0f) { shootCooldown -= 0.5f; } // prevents negative timers
                 timerRespawn = 0;
             }
         }
 
-        if (timerShoot > TimerIncrease && enemies.Count > 0) {
+        if (timerShoot > shootCooldown && enemies.Count > 0) {  // prevents out-of-bounds errors if no enemies in list
             int randomEnemy = Random.Range(0, enemies.Count);
             Instantiate(projectile, enemies[randomEnemy].transform.position, projectile.transform.rotation);
-            timerShoot = 0;
+            timerShoot = 0;     // randomly selects enemy and spawns projectile at position
         }
     }
 

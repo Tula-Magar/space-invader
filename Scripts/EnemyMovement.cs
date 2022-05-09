@@ -31,17 +31,20 @@ public class EnemyMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        // move once every second
         if (timerMove > 1.0f) {
             transform.position = new Vector2(transform.position.x + movementDirection, transform.position.y);
             timerMove = 0;
         }
     }
 
+    // if at boundary of screen, alert the EnemyManager to change the direction of the entire wave
     private void CheckOutOfBounds()
     {
         if (Mathf.Abs(transform.position.x) >= xRange) { enemyManager.EnemiesChangeDirection(); }
     }
 
+    // called by EnemyManager to control wave behavior
     public void ChangeDirection()
     {
         if (movementDirection == 1) {
@@ -54,6 +57,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    // collision detected, heavy lifting done by Unity's MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player_Projectile")) {

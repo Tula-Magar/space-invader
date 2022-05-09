@@ -8,25 +8,21 @@ public class ClickForInfo : MonoBehaviour
     private GameObject playButton;
     public Sprite info;
     public Sprite back;
-    private bool displayingInfo;
-
     public Text GameInfoText;
 
-    private string Game_Info_Text = @"Enemy: shoots toward player randomly. The enemy will respawn as soon as all the enemies died
+    private bool displayingInfo;
+    private string Game_Info_Text = @"Enemy: Enemies spawn in waves and shoot at the player. Defeat them all to advance to the next wave.
 
-Player: Shoot using space keyboard, move left and right using left and right arrows keyboard
+Player: Press SPACE to shoot, use left/right arrows or A and D to move. Players have 3 lives.
 
-Player life span: 3, Game will be over after the player dies three times
+Scoring: Each enemy is worth one point. Bonus ships are worth 3 points.
 
-Point score: 1 enemy killed is equal to 1 point and 1 alien ship killed is 3 point
-
-Reset: Once the game is loaded and the player got moved then the reset button will be disable. You need to reset the personal computer high score at the beginning of the game or before player move player. ";
+Reset: Resets the local high score.";
 
     void Start()
     {
         playButton = GameObject.Find("PlayButton");
         displayingInfo = false;
-
     }
 
     void Update()
@@ -34,6 +30,7 @@ Reset: Once the game is loaded and the player got moved then the reset button wi
 
     }
 
+    // rotates between what is displayed to user
     void OnMouseDown()
     {
         if (!displayingInfo)
@@ -65,6 +62,7 @@ Reset: Once the game is loaded and the player got moved then the reset button wi
     {
         GetComponent<SpriteRenderer>().color = new Color(255, 0, 187, 255);
     }
+
     public void OnMouseExit()
     {
         GetComponent<SpriteRenderer>().color = new Color(248, 248, 248, 255);
