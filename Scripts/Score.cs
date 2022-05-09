@@ -37,29 +37,34 @@ public class Score : MonoBehaviour
         }
     }
 
+    // Delete specific data holder from the pc register 
     public void Reset()
     {
         PlayerPrefs.DeleteKey(EventSystem.current.currentSelectedGameObject.name);
         HighScore.text = "Player highscore: 0";
     }
 
+    // Read the file of global high score 
     public void ReadFile(){
         StreamReader reader = new StreamReader(path);
         Number = int.Parse(reader.ReadToEnd());
         reader.Close();
     }
 
+    // Write the player high score for global into the text
     public void WriteFile(){
         StreamWriter writer = new StreamWriter(path, false);
         writer.Write(PlayerPrefs.GetInt("HighScoreAndReset", 0));
         writer.Close();
     }
 
+    // Set player high score in the pc register
     public void PlayerHighScore(){
         PlayerPrefs.SetInt("HighScoreAndReset", gameManager.ScoreNum);
         HighScore.text = "Player highscore: " + gameManager.ScoreNum.ToString();
     }
 
+    // Initial call 
     public void InitialCallLike_Constructor(){
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         ScoreTxt = GameObject.Find("Canvas/Score").GetComponent<Text>();

@@ -24,6 +24,8 @@ public class GlobalHighScore : MonoBehaviour
     {
 
     }
+
+     // Read the file of global high score 
     public void ReadFile(){
         StreamReader reader = new StreamReader(path);
         globalHighScore.text = "Global High Score: " + reader.ReadToEnd();
