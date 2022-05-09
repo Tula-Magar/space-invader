@@ -6,7 +6,7 @@ using System.IO;
 
 public class GlobalHighScore : MonoBehaviour
 {
-    private string path = "GlobalHighScore.txt"; // Assets/Resources/GlobalHighScore.txt
+    private string path = "Assets/Resources/GlobalHighScore.txt"; // Assets/Resources/GlobalHighScore.txt
     private Text globalHighScore;
 
     private Text Greeting;
@@ -16,13 +16,17 @@ public class GlobalHighScore : MonoBehaviour
         Greeting = GameObject.Find("Canvas/Greeting").GetComponent<Text>();
         Greeting.text = "Hi, welcome to space-invader game!!";
 
-        StreamReader reader = new StreamReader(path);
-        globalHighScore.text = "Global High Score: " + reader.ReadToEnd();
-        reader.Close();
+        ReadFile();
+
     }
 
     void Update()
     {
 
+    }
+    public void ReadFile(){
+        StreamReader reader = new StreamReader(path);
+        globalHighScore.text = "Global High Score: " + reader.ReadToEnd();
+        reader.Close();
     }
 }

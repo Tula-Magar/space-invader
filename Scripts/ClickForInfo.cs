@@ -35,26 +35,12 @@ Reset: Resets the local high score.";
     {
         if (!displayingInfo)
         {
-            playButton.gameObject.SetActive(false);
-            transform.position = new Vector2(transform.position.x, -4);
-            GameInfoText.text = Game_Info_Text;
-            this.GetComponent<SpriteRenderer>().sprite = back;
-            displayingInfo = true;
-
-            // disable game info screen
-            GameObject.Find("Canvas/GlobalHighScore").GetComponent<Text>().enabled = false;
-            GameObject.Find("Canvas/Greeting").GetComponent<Text>().enabled = false;
+            NotDisplaying();
         }
 
         else
         {
-            playButton.gameObject.SetActive(true);
-            transform.position = new Vector2(transform.position.x, -1);
-            this.GetComponent<SpriteRenderer>().sprite = info;
-            displayingInfo = false;
-            GameObject.Find("Canvas/GlobalHighScore").GetComponent<Text>().enabled = true;
-            GameInfoText.text = "";
-            GameObject.Find("Canvas/Greeting").GetComponent<Text>().enabled = true;
+           Displaying();
         }
     }
 
@@ -66,5 +52,30 @@ Reset: Resets the local high score.";
     public void OnMouseExit()
     {
         GetComponent<SpriteRenderer>().color = new Color(248, 248, 248, 255);
+    }
+
+    public void NotDisplaying(){
+
+        playButton.gameObject.SetActive(false);
+        transform.position = new Vector2(transform.position.x, -4);
+        GameInfoText.text = Game_Info_Text;
+        this.GetComponent<SpriteRenderer>().sprite = back;
+        displayingInfo = true;
+
+        // disable game info screen
+        GameObject.Find("Canvas/GlobalHighScore").GetComponent<Text>().enabled = false;
+        GameObject.Find("Canvas/Greeting").GetComponent<Text>().enabled = false;
+    }
+
+    public void Displaying(){
+
+        playButton.gameObject.SetActive(true);
+        transform.position = new Vector2(transform.position.x, -1);
+        this.GetComponent<SpriteRenderer>().sprite = info;
+        displayingInfo = false;
+        GameObject.Find("Canvas/GlobalHighScore").GetComponent<Text>().enabled = true;
+        GameInfoText.text = "";
+        GameObject.Find("Canvas/Greeting").GetComponent<Text>().enabled = true;
+
     }
 }

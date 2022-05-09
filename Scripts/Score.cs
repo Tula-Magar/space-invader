@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.EventSystems;
 
 public class Score : MonoBehaviour
 {
@@ -12,51 +13,62 @@ public class Score : MonoBehaviour
     private Text Resets;
     private int Number;
     private string path = "Assets/Resources/GlobalHighScore.txt";
-
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        ScoreTxt = GameObject.Find("Canvas/Score").GetComponent<Text>();
-        HighScore = GameObject.Find("Canvas/HighScore").GetComponent<Text>();
-        Resets = GameObject.Find("Canvas/Reset_button/Reset_button_name").GetComponent<Text>();
-        GameObject.Find("Canvas/Reset_button").GetComponent<Image>().color = new Color(255, 0, 187, 255);
-
-        Resets.text = "Reset";
-        HighScore.text = "High Score: " + PlayerPrefs.GetInt("highscore").ToString();
-        ScoreTxt.text = "Score: " + 0;
-
+        InitialCallLike_Constructor();
     }
 
     void Update()
     {
         ScoreTxt.text = "Score: " + gameManager.ScoreNum;
 
-        StreamReader reader = new StreamReader(path);
-        Number = int.Parse(reader.ReadToEnd());
-        reader.Close();
+        ReadFile();
 
-        if (gameManager.ScoreNum > PlayerPrefs.GetInt("highscore", 0))
+        if (gameManager.ScoreNum > PlayerPrefs.GetInt("HighScoreAndReset", 0))
         {
 
-            PlayerPrefs.SetInt("highscore", gameManager.ScoreNum);
-            HighScore.text = "High Score: " + gameManager.ScoreNum.ToString();
+            PlayerHighScore();
         }
 
         else if (PlayerPrefs.GetInt("highscore", 0) > Number)
         {
 
-            StreamWriter writer = new StreamWriter(path, false);
-            writer.Write(PlayerPrefs.GetInt("highscore", 0));
-            writer.Close();
+            WriteFile();
         }
     }
 
     public void Reset()
     {
-        PlayerPrefs.DeleteAll();
-        HighScore.text = "High Score: 0";
+        PlayerPrefs.DeleteKey(EventSystem.current.currentSelectedGameObject.name);
+        HighScore.text = "Player highscore: 0";
     }
 
+    public void ReadFile(){
+        StreamReader reader = new StreamReader(path);
+        Number = int.Parse(reader.ReadToEnd());
+        reader.Close();
+    }
 
+    public void WriteFile(){
+        StreamWriter writer = new StreamWriter(path, false);
+        writer.Write(PlayerPrefs.GetInt("HighScoreAndReset", 0));
+        writer.Close();
+    }
 
+    public void PlayerHighScore(){
+        PlayerPrefs.SetInt("HighScoreAndReset", gameManager.ScoreNum);
+        HighScore.text = "Player highscore: " + gameManager.ScoreNum.ToString();
+    }
+
+    public void InitialCallLike_Constructor(){
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        ScoreTxt = GameObject.Find("Canvas/Score").GetComponent<Text>();
+        HighScore = GameObject.Find("Canvas/HighScore").GetComponent<Text>();
+        Resets = GameObject.Find("Canvas/HighScoreAndReset/Reset_button_name").GetComponent<Text>();
+        GameObject.Find("Canvas/HighScoreAndReset").GetComponent<Image>().color = new Color(255, 0, 187, 255);
+
+        Resets.text = "Reset";
+        HighScore.text = "Player highscore: " + PlayerPrefs.GetInt("HighScoreAndReset").ToString();
+        ScoreTxt.text = "Score: " + 0;
+    }
 }
