@@ -37,6 +37,7 @@ public class EnemyManager : MonoBehaviour
         }
         if (PlayerPrefs.GetFloat("LevelReset", 0) == 0)
         {
+            PlayerPrefs.DeleteKey("LevelReset");
             if (timerShoot > TimerIncrease && enemies.Count > 0)
             {
                 RandomShootOnEqual();
