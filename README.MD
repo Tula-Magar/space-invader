@@ -1,3 +1,5 @@
+# Our goal was to build a game in unity editor mode. If you want to make a application or launch the game then you can git clone our space invader projects and update the scoring codes.
+
 # Environment setup 
 
 Nicholas and I decided to build a 2D space invader game in unity. You must have Unity installed on your computer. 
